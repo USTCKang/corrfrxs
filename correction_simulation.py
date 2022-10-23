@@ -72,14 +72,17 @@ def perfrom_one_simulate(files, key_count_rate, simulation_number=10000):
     data_source = np.array(data_source);
     data_back = np.array(data_back)
 
-    lenth = len(data_source[:, 1])
-
     data_net = data_source.copy()
     # net count rate, corrected by the task 'nulccorr'
     data_net[:, 1] = data_source[:, 1] - data_back[:, 1] * backscal_factor
     # net count rate original
     data_net[:, 2] = data_source[:, 2] - data_back[:, 2] * backscal_factor
 
+    locations = np.where(data_net[:, 1] > 0)
+    data_net = data_net[locations]
+    data_back = data_back[locations]
+    lenth = len(data_net[:, 1])
+    
     # calculate the intrinsic rms
     sigma_rms_intrinsic_2 = np.std(data_net[:, 2]) ** 2 - \
                             ((np.mean(data_net[:, 2] * data_net[:, 3]) * timebin) ** 0.5 / timebin) ** 2 \
