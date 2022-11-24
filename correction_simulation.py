@@ -35,8 +35,11 @@ def perfrom_one_simulate(files, key_count_rate, simulation_number=10000):
     fracexp_cut = 0.9
     locations_A = np.where(source_A[1].data['fracexp'] > fracexp_cut)
     source_A[1].data = source_A[1].data[locations_A]
+    back_A[1].data = back_A[1].data[locations_A]
+    
     locations_B = np.where(source_B[1].data['fracexp'] > fracexp_cut)
     source_B[1].data = source_B[1].data[locations_B]
+    back_B[1].data = back_B[1].data[locations_B]
 
     # In some cases, the Good Time Intevals of FPMA and FPMB can be different.
     # Here we align two lcs and caculate the sum of A and B
